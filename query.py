@@ -10,7 +10,7 @@ def db_connect(query):
 
 def main():
     query_1="""
-          CREATE TABLE IF NOT EXISTS colours (
+          CREATE TABLE IF NOT EXISTS colour (
           id INTEGER PRIMARY KEY AUTOINCREMENT
           ,colour VARCHAR(50)
           )
@@ -24,7 +24,9 @@ def main():
           ,colour_id INTEGER
           ,FOREIGN KEY (animal_id) REFERENCES animals('index')
           ,FOREIGN KEY (colour_id) REFERENCES colours(id)
+          )
             """
+    db_connect(query_2)
 
     query_3="""
            INSERT INTO colour (colour)
@@ -32,6 +34,7 @@ def main():
 		    color1 AS colour 
 	       FROM animals 
             """
+    db_connect(query_3)
 
     query_4="""
             INSERT INTO colour (colour)
@@ -40,6 +43,7 @@ def main():
             FROM animals 
             WHERE colour IS NOT NULL
             """
+    db_connect(query_4)
 
     query_5="""
             INSERT INTO animals_colours(animal_id,colour_id) 
@@ -49,6 +53,7 @@ def main():
             SELECT DISTINCT animals."index" ,colour.id FROM animals 
             JOIN colour ON colour.colour = animals.color2 
             """
+    db_connect(query_5)
 
     query_6="""
             CREATE TABLE IF NOT EXISTS breeds (
@@ -56,6 +61,7 @@ def main():
 		        ,breed VARCHAR(50)
             )
             """
+    db_connect(query_6)
 
     query_7="""
             INSERT INTO breeds (breed)
@@ -63,6 +69,7 @@ def main():
 		     breed AS breed
 	        FROM animals 
 	        """
+    db_connect(query_7)
 
     query_8="""
             CREATE TABLE IF NOT EXISTS types (
@@ -70,6 +77,7 @@ def main():
 		    ,"type" VARCHAR(50)
             )
             """
+    db_connect(query_8)
 
     query_9="""
             INSERT INTO types ("type")
@@ -77,6 +85,7 @@ def main():
 		     animal_type AS "type"
 	        FROM animals 
             """
+    db_connect(query_9)
 
     query_10="""
             CREATE TABLE IF NOT EXISTS outcome (
@@ -87,6 +96,7 @@ def main():
 	            ,"year" INTEGER
             )        
              """
+    db_connect(query_10)
 
     query_11="""
             INSERT INTO outcome (subtype,"type","month","year")
@@ -97,6 +107,7 @@ def main():
 	            ,animals.outcome_year  
 	            FROM animals 
              """
+    db_connect(query_11)
 
     query_12="""
             CREATE TABLE IF NOT EXISTS animals_edited (
@@ -110,9 +121,13 @@ def main():
 	            ,outcome_id INTEGER
 	            ,FOREIGN KEY (outcome_id) REFERENCES outcome(id)
 	            ,FOREIGN KEY (type_id) REFERENCES types(id)
-	            ,FOREIGN KEY (breed_id) REFERENCES breeds(id)           
+	            ,FOREIGN KEY (breed_id) REFERENCES breeds(id)    
+	            )       
              """
+    db_connect(query_12)
+
     query_13="""
+    
             INSERT INTO animals_edited(age_upon_outcome,animal_id,type_id,name,breed_id,date_of_birth,outcome_id)
             SELECT 
 	            animals.age_upon_outcome,animals.animal_id,types.id,animals.name,breeds.id,date_of_birth,outcome.id
@@ -127,9 +142,13 @@ def main():
             JOIN types 
             ON types."type"=animals."animal_type"           
              """
+    db_connect(query_13)
+
     query_14="""
             DROP TABLE animals_colours 
              """
+    db_connect(query_14)
+
     query_15="""
             CREATE TABLE IF NOT EXISTS animals_colours (
 	        animal_id INTEGER
@@ -138,6 +157,7 @@ def main():
 	        ,FOREIGN KEY (colour_id) REFERENCES  colour(id)
 	        )
              """
+    db_connect(query_15)
 
     query_16="""
             INSERT INTO animals_colours(animal_id,colour_id) 
@@ -154,7 +174,7 @@ def main():
                 ON animals_edited.animal_id=animals.animal_id
                 
              """
-
+    db_connect(query_16)
 
 if __name__ == '__main__':
     main()
