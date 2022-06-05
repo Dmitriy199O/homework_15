@@ -15,7 +15,7 @@ def main():
           ,colour VARCHAR(50)
           )
             """
-    # db_connect(query)
+    db_connect(query_1)
 
 
     query_2="""
@@ -85,7 +85,7 @@ def main():
 	            ,"type" VARCHAR(50)
 	            ,"month" INTEGER
 	            ,"year" INTEGER
-             )        
+            )        
              """
 
     query_11="""
@@ -126,6 +126,33 @@ def main():
 	            ON breeds.breed=animals.breed 
             JOIN types 
             ON types."type"=animals."animal_type"           
+             """
+    query_14="""
+            DROP TABLE animals_colours 
+             """
+    query_15="""
+            CREATE TABLE IF NOT EXISTS animals_colours (
+	        animal_id INTEGER
+	        ,colour_id INTEGER
+	        ,FOREIGN KEY (animal_id) REFERENCES  animals_edited(id)
+	        ,FOREIGN KEY (colour_id) REFERENCES  colour(id)
+	        )
+             """
+
+    query_16="""
+            INSERT INTO animals_colours(animal_id,colour_id) 
+            SELECT DISTINCT animals_edited.id ,colour.id
+            FROM animals 
+            JOIN colour ON colour.colour = animals.color1 
+            JOIN animals_edited
+                ON animals_edited.animal_id=animals.animal_id
+            UNION ALL	
+            SELECT DISTINCT animals_edited.id ,colour.id 
+            FROM animals 
+            JOIN colour ON colour.colour = animals.color2 
+            JOIN animals_edited
+                ON animals_edited.animal_id=animals.animal_id
+                
              """
 
 
