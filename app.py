@@ -29,8 +29,18 @@ def animal_info(item_id):
              """
 
     result=db_connect(query)
-
-    return jsonify(result)
+    res_json=[]
+    for r in result:
+        res_json.append({
+            'id':r[0],
+            'age':r[1],
+            'name':r[2],
+            'color':r[3],
+            'breed':r[4],
+            'type':r[5]
+        }
+        )
+    return jsonify(res_json)
 
 if __name__ == '__main__':
     app.run(debug=True)
