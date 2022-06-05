@@ -2,14 +2,25 @@ import sqlite3 as sq
 
 
 def db_connect(query):
+    """
+    This function is used to establish a connection to a database
+    :param query:
+    :return: all rows of a query rsults
+    """
+
     with sq.connect("animal.db") as con:
         cur = con.cursor()
         cur.execute(query)
-        result=cur.fetchall()
+        result = cur.fetchall()
         return result
 
+
 def main():
-    query_1="""
+    """
+    Main function, which is to create and edit tables
+    """
+
+    query_1 = """
           CREATE TABLE IF NOT EXISTS colour (
           id INTEGER PRIMARY KEY AUTOINCREMENT
           ,colour VARCHAR(50)
@@ -17,8 +28,7 @@ def main():
             """
     db_connect(query_1)
 
-
-    query_2="""
+    query_2 = """
           CREATE TABLE IF NOT EXISTS animals_colours (
           animal_id INTEGER 
           ,colour_id INTEGER
@@ -28,7 +38,7 @@ def main():
             """
     db_connect(query_2)
 
-    query_3="""
+    query_3 = """
            INSERT INTO colour (colour)
 	       SELECT DISTINCT 
 		    color1 AS colour 
@@ -36,7 +46,7 @@ def main():
             """
     db_connect(query_3)
 
-    query_4="""
+    query_4 = """
             INSERT INTO colour (colour)
 	        SELECT DISTINCT 
              color2 AS colour             
@@ -45,7 +55,7 @@ def main():
             """
     db_connect(query_4)
 
-    query_5="""
+    query_5 = """
             INSERT INTO animals_colours(animal_id,colour_id) 
             SELECT DISTINCT animals."index" ,colour.id FROM animals 
             JOIN colour ON colour.colour = animals.color1 
@@ -55,7 +65,7 @@ def main():
             """
     db_connect(query_5)
 
-    query_6="""
+    query_6 = """
             CREATE TABLE IF NOT EXISTS breeds (
 		        id INTEGER PRIMARY KEY AUTOINCREMENT
 		        ,breed VARCHAR(50)
@@ -63,7 +73,7 @@ def main():
             """
     db_connect(query_6)
 
-    query_7="""
+    query_7 = """
             INSERT INTO breeds (breed)
 	        SELECT DISTINCT 
 		     breed AS breed
@@ -71,7 +81,7 @@ def main():
 	        """
     db_connect(query_7)
 
-    query_8="""
+    query_8 = """
             CREATE TABLE IF NOT EXISTS types (
 		    id INTEGER PRIMARY KEY AUTOINCREMENT
 		    ,"type" VARCHAR(50)
@@ -79,7 +89,7 @@ def main():
             """
     db_connect(query_8)
 
-    query_9="""
+    query_9 = """
             INSERT INTO types ("type")
 	        SELECT DISTINCT 
 		     animal_type AS "type"
@@ -87,7 +97,7 @@ def main():
             """
     db_connect(query_9)
 
-    query_10="""
+    query_10 = """
             CREATE TABLE IF NOT EXISTS outcome (
 	            id INTEGER PRIMARY KEY AUTOINCREMENT
 	            ,subtype VARCHAR(50)
@@ -98,7 +108,7 @@ def main():
              """
     db_connect(query_10)
 
-    query_11="""
+    query_11 = """
             INSERT INTO outcome (subtype,"type","month","year")
             SELECT DISTINCT
 	            animals.outcome_subtype 
@@ -109,7 +119,7 @@ def main():
              """
     db_connect(query_11)
 
-    query_12="""
+    query_12 = """
             CREATE TABLE IF NOT EXISTS animals_edited (
 	            id INTEGER PRIMARY KEY AUTOINCREMENT
 	            ,age_upon_outcome VARCHAR(50)
@@ -126,7 +136,7 @@ def main():
              """
     db_connect(query_12)
 
-    query_13="""
+    query_13 = """
     
             INSERT INTO animals_edited(age_upon_outcome,animal_id,type_id,name,breed_id,date_of_birth,outcome_id)
             SELECT 
@@ -144,12 +154,12 @@ def main():
              """
     db_connect(query_13)
 
-    query_14="""
+    query_14 = """
             DROP TABLE animals_colours 
              """
     db_connect(query_14)
 
-    query_15="""
+    query_15 = """
             CREATE TABLE IF NOT EXISTS animals_colours (
 	        animal_id INTEGER
 	        ,colour_id INTEGER
@@ -159,7 +169,7 @@ def main():
              """
     db_connect(query_15)
 
-    query_16="""
+    query_16 = """
             INSERT INTO animals_colours(animal_id,colour_id) 
             SELECT DISTINCT animals_edited.id ,colour.id
             FROM animals 
@@ -175,6 +185,7 @@ def main():
                 
              """
     db_connect(query_16)
+
 
 if __name__ == '__main__':
     main()
