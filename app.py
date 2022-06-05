@@ -7,7 +7,7 @@ app=Flask(__name__)
 @app.route('/<int:item_id>/')
 def animal_info(item_id):
     query = f"""
-            SELECT
+            SELECT DISTINCT 
                  animals_edited.id
                  ,animals_edited.age_upon_outcome
                  ,animals_edited.name
