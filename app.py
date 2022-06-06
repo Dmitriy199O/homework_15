@@ -16,15 +16,15 @@ def animal_info(item_id):
                  ,breeds.breed
                  ,types."type"
             FROM animals_edited
-            JOIN animals_colours
+            LEFT JOIN animals_colours
                ON animals_colours.animal_id = animals_edited.id
-            JOIN colour
+            LEFT JOIN colour
                ON colour.id = animals_colours.animal_id
-            JOIN outcome
+            LEFT JOIN outcome
                ON outcome.id = animals_edited.outcome_id
-            JOIN types
+            LEFT JOIN types
                ON types.id = animals_edited.type_id
-            JOIN breeds
+            LEFT JOIN breeds
                ON breeds.id = animals_edited.breed_id
             WHERE animals_edited.id = {item_id}
              """
