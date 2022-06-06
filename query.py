@@ -144,13 +144,13 @@ def main():
             FROM animals 	
             JOIN outcome 
 	            ON outcome.subtype = animals.outcome_subtype 
-	            AND outcome."type"= animals.outcome_type 
-	            AND outcome."year"= animals.outcome_year 
-	            AND outcome."month"= animals.outcome_month
+	            AND outcome."type" = animals.outcome_type 
+	            AND outcome."year" = animals.outcome_year 
+	            AND outcome."month" = animals.outcome_month
             JOIN breeds 
-	            ON breeds.breed=animals.breed 
+	            ON breeds.breed = animals.breed 
             JOIN types 
-            ON types."type"=animals."animal_type"           
+            ON types."type" = animals."animal_type"           
              """
     db_connect(query_13)
 
@@ -175,13 +175,13 @@ def main():
             FROM animals 
             JOIN colour ON colour.colour = animals.color1 
             JOIN animals_edited
-                ON animals_edited.animal_id=animals.animal_id
+                ON animals_edited.animal_id = animals.animal_id
             UNION ALL	
             SELECT DISTINCT animals_edited.id ,colour.id 
             FROM animals 
             JOIN colour ON colour.colour = animals.color2 
             JOIN animals_edited
-                ON animals_edited.animal_id=animals.animal_id
+                ON animals_edited.animal_id = animals.animal_id
                 
              """
     db_connect(query_16)
